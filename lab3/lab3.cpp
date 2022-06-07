@@ -70,10 +70,13 @@ int main()
     int removekey;      //змінна пункту меню
     int key;            //ключ
     int swork;          //змінна пункту меню
+    int low;
+    int high;
 
 
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
+    srand(time(NULL));
 
     do {
 
@@ -113,7 +116,7 @@ int main()
 
             }
 
-            puts("Як хочете ввести данні \n1)Вручну\n2)Kлюч з файлу");
+            puts("Як хочете ввести данні \n1)Вручну\n2)Kлюч з файлу\n3)рандомно");
             scann(swork);
             switch (swork) {
 
@@ -156,7 +159,7 @@ int main()
                 break;
             case 2:
 
-
+            {
                 puts("Введіть назву файлу:");
                 do {
                     fgets(filename, 1024, stdin);
@@ -206,6 +209,40 @@ int main()
                 }
                 puts("Додано!");
                 break;
+            }
+            case 3:
+            {
+                printf("Введіть границі рандому:\n");
+                printf("Введіть нижню границю рандому:");
+                scanf("%d", &low);
+
+                printf("Введіть верхню границю рандому:");
+                scanf("%d", &high);
+
+                if (low > high)
+                {
+
+                    printf("Low must be < then high");
+                    break;
+                }
+
+                key = low - 1 + rand() % ((high - low) + 1); ;
+
+                if (tree->root == NULL)
+                {
+                    tree->root = Add(tree, tree->root, key);
+                }
+                else
+                {
+                    Add(tree, tree->root, key);
+                }
+                if (Add == NULL)
+                {
+                    puts("Something went wrong");
+                    exit(0);
+                }
+                break;
+            }
             }
 
             break;
@@ -766,8 +803,8 @@ Tree_desc* readfile(FILE* fp, Tree_desc* tree)
 
 
     key = 0;
-    fseek(fp, 0, SEEK_END);
-    int file_size = ftell(fp) / (sizeof(int));
+    int file_size = countStrs(fp);
+    printf("------%d-----", file_size);
     rewind(fp);
     for (int i = 0; i <= file_size; i++)
     {
