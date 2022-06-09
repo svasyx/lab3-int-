@@ -212,6 +212,9 @@ int main()
             }
             case 3:
             {
+                puts("Скільки елементів хочете додати ?");
+                scann(howmany);
+
                 printf("Введіть границі рандому:\n");
                 printf("Введіть нижню границю рандому:");
                 scanf("%d", &low);
@@ -225,9 +228,10 @@ int main()
                     printf("Low must be < then high");
                     break;
                 }
+                for (int i = 0; i < howmany; i++) {
 
-                key = low - 1 + rand() % ((high - low) + 1); ;
-
+                    key = low - 1 + rand() % ((high - low) + 1);
+                
                 if (tree->root == NULL)
                 {
                     tree->root = Add(tree, tree->root, key);
@@ -240,6 +244,7 @@ int main()
                 {
                     puts("Something went wrong");
                     exit(0);
+                }
                 }
                 break;
             }
